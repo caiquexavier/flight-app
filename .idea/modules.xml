@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/flight-control-app.iml" filepath="$PROJECT_DIR$/flight-control-app.iml" group="flight-control-app and modules" />
+      <module fileurl="file://$PROJECT_DIR$/flight-service/flight-service (1).iml" filepath="$PROJECT_DIR$/flight-service/flight-service (1).iml" group="flight-control-app and modules" />
+      <module fileurl="file://$PROJECT_DIR$/flight-service/target/classes/META-INF/maven/com.cxavier/flight-service/flight-service (2).iml" filepath="$PROJECT_DIR$/flight-service/target/classes/META-INF/maven/com.cxavier/flight-service/flight-service (2).iml" />
+      <module fileurl="file://$PROJECT_DIR$/flight-service/target/classes/META-INF/maven/com.cxavier/flight-service/flight-service (3) (com.cxavier).iml" filepath="$PROJECT_DIR$/flight-service/target/classes/META-INF/maven/com.cxavier/flight-service/flight-service (3) (com.cxavier).iml" />
+      <module fileurl="file://$PROJECT_DIR$/flight-service/target/classes/META-INF/maven/com.cxavier/fullstack-demo-order-service/fullstack-demo-order-service (1).iml" filepath="$PROJECT_DIR$/flight-service/target/classes/META-INF/maven/com.cxavier/fullstack-demo-order-service/fullstack-demo-order-service (1).iml" />
+      <module fileurl="file://$PROJECT_DIR$/flight-service/target/classes/META-INF/maven/com.cxavier/fullstack-demo-order-service/fullstack-demo-order-service (2) (com.cxavier).iml" filepath="$PROJECT_DIR$/flight-service/target/classes/META-INF/maven/com.cxavier/fullstack-demo-order-service/fullstack-demo-order-service (2) (com.cxavier).iml" />
+    </modules>
+  </component>
+</project>
