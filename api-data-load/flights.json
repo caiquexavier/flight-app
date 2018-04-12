@@ -1,0 +1,13 @@
+[{
+  "flightCode": "AAD7891",
+  "departureDateTime": "2018-01-20T09:00:00",
+  "arrivalDateTime": "2018-01-20T12:00:00",
+  "airplane": {
+    "airplaneModel": "Boeing 777",
+    "airplaneCode": "xyutbs105478"
+  },
+  "pilot" : {
+    "pilotName": "Caique",
+    "pilotDocument": "AEROBR-3312-45XZ"
+  }
+}]
