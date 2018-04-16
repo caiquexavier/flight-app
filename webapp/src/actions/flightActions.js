@@ -1,7 +1,7 @@
 // Core
 import axios from 'axios'
 
-const flightsApiUrl = "http://localhost:8081/v1/flights/"
+const flightsApiUrl = "http://localhost:8081/v1/flights/search/byQueryResults"
 
 export function fetchRequested() {
   let payload = {
@@ -65,15 +65,15 @@ export function fetchFlights(filters) {
     )
 
     let params = {
-      flightCode: filters.flightCode,
-      status: filters.status,
+      flightCode: (filters.flightCode) ? filters.flightCode : "",
+      status: (filters.status) ? filters.status : "",
       initialDate: initialDate.toISOString(),
       finalDate: finalDate.toISOString()
     }
     console.log("Params ->", params)
     // new Date(year, month, day, hours, minutes, seconds, milliseconds)
     dispatch( fetchRequested() )
-    axios.get(flightsApiUrl).then( (response) => {
+    axios.get(flightsApiUrl, {params}).then( (response) => {
 
         let flights = response.data._embedded.flights
         dispatch(fetchFullfiled(flights))
