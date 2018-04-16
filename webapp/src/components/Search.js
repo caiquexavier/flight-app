@@ -8,6 +8,8 @@ import TextField from 'material-ui/TextField'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentSearch from 'material-ui/svg-icons/action/search'
 import DatePicker from 'material-ui/DatePicker'
+import TimePicker from 'material-ui/TimePicker';
+
 // Actions
 import { setFilters } from '../actions/filterActions'
 import { fetchFlights } from '../actions/flightActions'
@@ -32,34 +34,42 @@ export class Search extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      minDate: this.props.filters.minDate,
-      maxDate: this.props.filters.maxDate
+      initialDepartureDate: props.filters.initialDepartureDate,
+      initialDepartureTime: props.filters.initialDepartureTime,
+      finalDepartureDate: props.filters.finalDepartureDate,
+      finalDepartureTime: props.filters.finalDepartureTime,
     }
   }
 
-  handleChangeMinDate = (event, date) => {
+  handleChangeFlightCode = (event, flightCode) => {
     this.setState({
-      minDate: date,
+      flightCode: flightCode,
     })
   }
-  handleChangeMaxDate = (event, date) => {
+  handleChangeStatus = (event, status) => {
     this.setState({
-      maxDate: date,
+      status: status,
     })
   }
-  handleChangeName = (event, name) => {
+  // Departures
+  handleInitialDepartureDate = (event, date) => {
     this.setState({
-      name: name,
+      initialDepartureDate: date,
     })
   }
-  handleChangePhone = (event, phone) => {
+  handleInitialDepartureTime = (event, time) => {
     this.setState({
-      phone: phone,
+      initialDepartureTime: time,
     })
   }
-  handleChangeMail = (event, email) => {
+  handleFinalDepartureDate = (event, date) => {
     this.setState({
-      email: email,
+      finalDepartureDate: date,
+    })
+  }
+  handleFinalDepartureTime = (event, time) => {
+    this.setState({
+      finalDepartureTime: time,
     })
   }
 
@@ -68,38 +78,53 @@ export class Search extends Component {
       <Card>
       <Container>
         <Row align="start">
-        <Col sm={2}>
-        <DatePicker
-            onChange={this.handleChangeMinDate}
-            floatingLabelText="Min Date"
-            defaultDate={ new Date(this.props.filters.minDate) }
-          />
+        <Col sm={6}>
+          <TextField floatingLabelText="Flight Code" floatingLabelFixed={true} defaultValue={this.props.filters.flightCode} onChange={this.handleChangeFlightCode}/>
         </Col>
-
-        <Col sm={2}>
-        <DatePicker
-            onChange={this.handleChangeMaxDate}
-            floatingLabelText="Max Date"
-            defaultDate={ new Date(this.props.filters.maxDate) }
-          />
+        <Col sm={6}>
+          <TextField floatingLabelText="Status" floatingLabelFixed={true} defaultValue={this.props.filters.status} onChange={this.handleChangeStatus}/>
         </Col>
-
-        <Col sm={2}>
-          <TextField floatingLabelText="Client Name" floatingLabelFixed={true} defaultValue={this.props.filters.name} onChange={this.handleChangeName}/>
-        </Col>
-        <Col sm={2}>
-          <TextField floatingLabelText="Phone" floatingLabelFixed={true} defaultValue={this.props.filters.phone} onChange={this.handleChangePhone}/>
-        </Col>
-        <Col sm={2}>
-          <TextField floatingLabelText="Email" floatingLabelFixed={true} defaultValue={this.props.filters.email} onChange={this.handleChangeMail}/>
-        </Col>
-        <Col sm={2}>
-            <CardActions>
-              <FloatingActionButton onClick = { () => this.props.setFilters(this.state) }>
-                <ContentSearch />
-              </FloatingActionButton>
-            </CardActions>
-        </Col>
+        </Row>
+        <Row align="start">
+          <Col sm={3}>
+          <DatePicker
+              onChange={this.handleInitialDepartureDate}
+              floatingLabelText="Departure Between"
+              defaultDate={ this.props.filters.initialDepartureDate }
+            />
+          </Col>
+          <Col sm={3}>
+            <TimePicker
+              onChange={this.handleInitialDepartureTime}
+              format="24hr"
+              floatingLabelText="Time"
+              defaultTime={ this.props.filters.initialDepartureTime }
+            />
+          </Col>
+          <Col sm={3}>
+          <DatePicker
+              onChange={this.handleFinalDepartureDate}
+              floatingLabelText="And"
+              defaultDate={ this.props.filters.finalDepartureDate }
+            />
+          </Col>
+          <Col sm={3}>
+            <TimePicker
+              onChange={this.handleFinalDepartureTime}
+              format="24hr"
+              floatingLabelText="Time"
+              defaultTime={ this.props.filters.finalDepartureTime }
+            />
+          </Col>
+        </Row>
+        <Row >
+            <Col align="end" sm={12}>
+                <CardActions>
+                  <FloatingActionButton onClick = { () => this.props.setFilters(this.state) }>
+                    <ContentSearch />
+                  </FloatingActionButton>
+                </CardActions>
+            </Col>
         </Row>
         </Container>
         </Card>

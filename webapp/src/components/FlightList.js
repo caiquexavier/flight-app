@@ -3,16 +3,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 // Ui Ux
-import { Container } from 'react-grid-system'
-import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table'
-import {Card } from 'material-ui/Card'
+import { Container, Row, Col } from 'react-grid-system'
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card'
+import Subheader from 'material-ui/Subheader';
+import Avatar from 'material-ui/Avatar';
+import Chip from 'material-ui/Chip';
 import FlatButton from 'material-ui/FlatButton'
 import Dialog from 'material-ui/Dialog'
 import RefreshIndicator from 'material-ui/RefreshIndicator';
 import Snackbar from 'material-ui/Snackbar';
 // Formatters
 import moment from 'moment';
-import numeral from 'numeral'
 // Actions
 import { fetchFlights, fetchCompleted } from '../actions/flightActions'
 // -- end: Imports
@@ -55,7 +56,10 @@ class FlightList extends Component {
       height: '300px',
       selected: [],
       open: false,
-      orderDetails: {}
+      flightDetails: {
+        airplane: {},
+        pilot: {}
+      }
     }
 
   }
@@ -79,10 +83,9 @@ class FlightList extends Component {
     if (selectedRows.length === 0) {
       selectedRows = [0]
     }
-
     this.setState({
       selected: selectedRows,
-      orderDetails: this.props.flights[selectedRows]
+      flightDetails: this.props.flights[selectedRows]
     })
     this.handleOpen()
   }
@@ -98,55 +101,43 @@ class FlightList extends Component {
     })
   }
 
-  renderDetailsDialog () {
-
-    const actions = [
-      <FlatButton
-        label="Submit"
-        primary={true}
-        keyboardFocused={true}
-        onClick={this.handleClose}
-      />,
-    ]
-
-    return (
-      <Dialog title="Order Details" actions={actions} modal={false} open={this.state.open} onRequestClose={this.handleClose} >
-          <span> Client Name: <b>{this.state.orderDetails.clientName} </b></span><br/>
-          <span> Phone: <b>{this.state.orderDetails.clientPhone} </b></span><br/>
-          <span> Email: <b>{this.state.orderDetails.clientEmail} </b></span><br/>
-          <hr/>
-      </Dialog>
-    )
-  }
-
-  renderFlights () {
+  renderFlights() {
 
     let flightList = this.props.flights
-    console.log("flightList ==>", flightList)
     if (flightList.length > 0) {
 
       return flightList.map( (flight, i) => {
-        return (<TableRow key={i} selected={this.isSelected(i)}>
-                    <TableRowColumn> { flight.flightCode } </TableRowColumn>
-                    <TableRowColumn> { flight.airplane.airplaneModel } </TableRowColumn>
-                    <TableRowColumn> { moment(flight.departureDateTime).format('DD/MM/YYYY') } </TableRowColumn>
-                    <TableRowColumn> { moment(flight.departureDateTime).format('hh:mm:ss a') } </TableRowColumn>
-                    <TableRowColumn> { moment(flight.arrivalDateTime).format('DD/MM/YYYY') } </TableRowColumn>
-                    <TableRowColumn> { moment(flight.arrivalDateTime).format('hh:mm:ss a') } </TableRowColumn>
-                    <TableRowColumn> status </TableRowColumn>
-                </TableRow>)
+        return (
+          <Card key={i}>
+            <CardHeader
+              title={ flight.flightCode }
+              subtitle={ flight.status }
+              avatar="./image/flight_icon_new.jpg"
+            />
+            <CardText>
+            <Row align="start">
+              <Col sm={2}>
+                <h5> Departure Datetime: </h5> { moment(flight.departureDateTime).format('DD/MM/YYYY hh:mm:ss A') }
+              </Col>
+              <Col sm={2}>
+                <h5> Arrival Datetime:  </h5> { moment(flight.arrivalDateTime).format('DD/MM/YYYY hh:mm:ss A') }
+              </Col>
+            </Row>
+            </CardText>
+            <CardText>
+              <Chip>
+                <Avatar src="./image/pilot.jpg" />
+                { flight.pilot.pilotName } - { flight.pilot.pilotDocument }
+              </Chip>
+            </CardText>
+          </Card>
+        )
       }
     )} else {
-      return (<TableRow>
-                <TableRowColumn> </TableRowColumn>
-                <TableRowColumn> </TableRowColumn>
-                <TableRowColumn> { this.renderLoading() }
-                </TableRowColumn>
-                  <TableRowColumn> </TableRowColumn>
-                  <TableRowColumn> </TableRowColumn>
-              </TableRow>)
+      return (<Card> { this.renderLoading() }  </Card>)
     }
   }
+
 
   renderLoading() {
 
@@ -168,29 +159,14 @@ class FlightList extends Component {
   render() {
     return (
       <Card>
+      <Subheader><h3>Next Departures</h3></Subheader>
       <Container>
       <Snackbar
         open={ (this.props.error !== "") }
         message= { ((this.props.error) ? this.props.error : "Error!") }
         autoHideDuration={4000}
       />
-      { this.renderDetailsDialog() }
-      <Table onRowSelection={this.handleRowSelection}>
-        <TableHeader displaySelectAll={this.state.showCheckboxes} selectable = {this.state.selectable} adjustForCheckbox={this.state.showCheckboxes}>
-          <TableRow>
-            <TableHeaderColumn>Flight Code</TableHeaderColumn>
-            <TableHeaderColumn>Airplane</TableHeaderColumn>
-            <TableHeaderColumn>Departure Date</TableHeaderColumn>
-            <TableHeaderColumn>Time</TableHeaderColumn>
-            <TableHeaderColumn>Arrival Date</TableHeaderColumn>
-            <TableHeaderColumn>Time</TableHeaderColumn>
-            <TableHeaderColumn>Status</TableHeaderColumn>
-          </TableRow>
-        </TableHeader>
-        <TableBody displayRowCheckbox={this.state.showCheckboxes} deselectOnClickaway={this.state.deselectOnClickaway} showRowHover={this.state.showRowHover} stripedRows={this.state.stripedRows}>
-            { this.renderFlights() }
-        </TableBody>
-      </Table>
+      { this.renderFlights() }
       </Container>
       </Card>
      );

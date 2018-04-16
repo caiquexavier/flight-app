@@ -1,8 +1,6 @@
 package com.flight.flightservice;
 
-import com.flight.flightservice.model.Airplane;
 import com.flight.flightservice.model.Flight;
-import com.flight.flightservice.model.Pilot;
 import com.flight.flightservice.repository.FlightRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;
@@ -25,25 +23,21 @@ public class FlightServiceApplicationTests {
 	FlightRepository flightRepository;
 
 	@Test
-	public void orderTest() {
+	public void flightTest() {
 
 		flightRepository.deleteAll();
 
 		Calendar departure = new GregorianCalendar(2018, 1, 15, 16, 00, 00);
 		Calendar arrival = new GregorianCalendar(2018, 1, 15, 20, 30, 00);
 
-		Airplane airplane = new Airplane();
-		airplane.setAirplaneCode("EXCVT67TY");
-		airplane.setAirplaneModel("BOEING 777");
+		Flight flight = new Flight("AAX7431", departure, arrival, "NOW BORADING",
+				new Flight.Airplane("BOEING 777", "PLN123"),
+				new Flight.Pilot("Caique", "RG123456"));
 
-		Pilot pilot = new Pilot();
-		pilot.setPilotName("Caique");
-		pilot.setPilotDocument("AIRBR39771673831");
-
-		flightRepository.save(new Flight("AAX7431", departure, arrival, airplane, pilot));
+		flightRepository.save(flight);
 
 		Integer resultContAll = 0;
-		for (Flight flight : flightRepository.findAll()) {
+		for (Flight flightResponse : flightRepository.findAll()) {
 			resultContAll++;
 		}
 		Assert.assertEquals(resultContAll, new Integer(1));

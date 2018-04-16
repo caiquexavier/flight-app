@@ -11,7 +11,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 @SpringBootApplication
-@EnableMongoRepositories("com.flight")
+@EnableMongoRepositories("com.flight.flightservice")
 public class FlightServiceApplication {
 
 	public static void main(String[] args) {
@@ -31,4 +31,5 @@ public class FlightServiceApplication {
 			return bean;
 		}
 	}
+
 }

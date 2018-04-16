@@ -1,7 +1,7 @@
 // Core
 import axios from 'axios'
 
-const flightsApiUrl = "http://localhost:8081/v1/flights"
+const flightsApiUrl = "http://localhost:8081/v1/flights/"
 
 export function fetchRequested() {
   let payload = {
@@ -47,6 +47,31 @@ export function fetchFlights(filters) {
 
   return (dispatch) => {
 
+    let initialDate = new Date(
+      filters.initialDepartureDate.getFullYear(),
+      filters.initialDepartureDate.getMonth(),
+      filters.initialDepartureDate.getDate(),
+      filters.initialDepartureTime.getHours(),
+      filters.initialDepartureTime.getMinutes(),
+      filters.initialDepartureTime.getSeconds(),
+    )
+    let finalDate = new Date(
+      filters.finalDepartureDate.getFullYear(),
+      filters.finalDepartureDate.getMonth(),
+      filters.finalDepartureDate.getDate(),
+      filters.finalDepartureTime.getHours(),
+      filters.finalDepartureTime.getMinutes(),
+      filters.finalDepartureTime.getSeconds(),
+    )
+
+    let params = {
+      flightCode: filters.flightCode,
+      status: filters.status,
+      initialDate: initialDate.toISOString(),
+      finalDate: finalDate.toISOString()
+    }
+    console.log("Params ->", params)
+    // new Date(year, month, day, hours, minutes, seconds, milliseconds)
     dispatch( fetchRequested() )
     axios.get(flightsApiUrl).then( (response) => {
 
