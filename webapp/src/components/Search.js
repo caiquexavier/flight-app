@@ -9,6 +9,8 @@ import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ContentSearch from 'material-ui/svg-icons/action/search'
 import DatePicker from 'material-ui/DatePicker'
 import TimePicker from 'material-ui/TimePicker';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 
 // Actions
 import { setFilters } from '../actions/filterActions'
@@ -28,6 +30,14 @@ const mapDispatchToProps = (dispatch) => {
     }
   }
 }
+const statusList = [
+  "",
+  "LANDED",
+  "NOW BOARDING",
+  "FLIGHT CLOSING",
+  "DEPARTED",
+  "CANCELLED"
+]
 
 export class Search extends Component {
 
@@ -38,6 +48,7 @@ export class Search extends Component {
       initialDepartureTime: props.filters.initialDepartureTime,
       finalDepartureDate: props.filters.finalDepartureDate,
       finalDepartureTime: props.filters.finalDepartureTime,
+      status: props.filters.status
     }
   }
 
@@ -46,9 +57,9 @@ export class Search extends Component {
       flightCode: flightCode,
     })
   }
-  handleChangeStatus = (event, status) => {
+  handleChangeStatus = (event, key) => {
     this.setState({
-      status: status,
+      status: statusList[key],
     })
   }
   // Departures
@@ -83,6 +94,9 @@ export class Search extends Component {
         </Col>
         <Col sm={6}>
           <TextField floatingLabelText="Status" floatingLabelFixed={true} defaultValue={this.props.filters.status} onChange={this.handleChangeStatus}/>
+          <SelectField floatingLabelText="Status" value={this.state.status} onChange={this.handleChangeStatus} >
+            { statusList.map( (status) => <MenuItem key={status} value={status} primaryText={status} /> )}
+          </SelectField>
         </Col>
         </Row>
         <Row align="start">

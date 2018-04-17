@@ -70,7 +70,6 @@ export function fetchFlights(filters) {
       initialDate: initialDate.toISOString(),
       finalDate: finalDate.toISOString()
     }
-    console.log("Params ->", params)
     // new Date(year, month, day, hours, minutes, seconds, milliseconds)
     dispatch( fetchRequested() )
     axios.get(flightsApiUrl, {params}).then( (response) => {

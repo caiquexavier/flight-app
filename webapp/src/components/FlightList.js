@@ -4,18 +4,19 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 // Ui Ux
 import { Container, Row, Col } from 'react-grid-system'
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card'
+import {Card, CardHeader, CardText} from 'material-ui/Card'
 import Subheader from 'material-ui/Subheader';
 import Avatar from 'material-ui/Avatar';
 import Chip from 'material-ui/Chip';
-import FlatButton from 'material-ui/FlatButton'
-import Dialog from 'material-ui/Dialog'
 import RefreshIndicator from 'material-ui/RefreshIndicator';
 import Snackbar from 'material-ui/Snackbar';
 // Formatters
 import moment from 'moment';
 // Actions
 import { fetchFlights, fetchCompleted } from '../actions/flightActions'
+// Full Version Resolution Imports
+// import FlatButton from 'material-ui/FlatButton'
+// import Dialog from 'material-ui/Dialog'
 // -- end: Imports
 
 const mapStateToProps = (state) => {
@@ -116,19 +117,29 @@ class FlightList extends Component {
             />
             <CardText>
             <Row align="start">
-              <Col sm={2}>
+              <Col sm={6}>
                 <h5> Departure Datetime: </h5> { moment(flight.departureDateTime).format('DD/MM/YYYY hh:mm:ss A') }
               </Col>
-              <Col sm={2}>
+              <Col sm={6}>
                 <h5> Arrival Datetime:  </h5> { moment(flight.arrivalDateTime).format('DD/MM/YYYY hh:mm:ss A') }
               </Col>
             </Row>
             </CardText>
             <CardText>
-              <Chip>
-                <Avatar src="./image/pilot.jpg" />
-                { flight.pilot.pilotName } - { flight.pilot.pilotDocument }
-              </Chip>
+            <Row align="start">
+              <Col sm={6}>
+                <Chip>
+                  <Avatar src="./image/pilot.jpg" />
+                  { flight.pilot.pilotName } - { flight.pilot.pilotDocument }
+                </Chip>
+              </Col>
+              <Col sm={6}>
+                <Chip>
+                  <Avatar src="./image/airplane_icon.jpg" />
+                  { flight.airplane.airplaneModel } - { flight.airplane.airplaneCode }
+                </Chip>
+              </Col>
+            </Row>
             </CardText>
           </Card>
         )

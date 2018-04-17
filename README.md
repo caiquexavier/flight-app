@@ -28,7 +28,7 @@
 # Data load and Api testing script
 * cd api-data-load/
 * node index.js
-* At this moment you cloud do some validations
+* At this moment you could do some validations
   - First: you will see response for objects pushed to API
   - Second: on flight-service/ command line (spring-boot instance), you will see messages dispached to rabbit-mq, with Object creation payload.
 * refresh http://localhost:3000/
